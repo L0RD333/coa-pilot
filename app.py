@@ -32,13 +32,6 @@ if "dark" not in st.session_state:
 st.markdown(css("dark" if st.session_state.dark else "light"),
             unsafe_allow_html=True)
 
-top_l, top_r = st.columns([6, 1])
-with top_r:
-    if st.button("☀️ Light" if st.session_state.dark else "🌙 Dark",
-                 use_container_width=True):
-        st.session_state.dark = not st.session_state.dark
-        st.rerun()
-
 # ---------- Hero ----------
 st.markdown(
     """
@@ -56,7 +49,13 @@ st.markdown(
     </div>
     """, unsafe_allow_html=True)
 
-# ---------- Sidebar: categories ----------
+# ---------- Sidebar: theme toggle + categories ----------
+if st.sidebar.button("☀️ Switch to light" if st.session_state.dark
+                     else "🌙 Switch to dark", use_container_width=True):
+    st.session_state.dark = not st.session_state.dark
+    st.rerun()
+st.sidebar.divider()
+
 st.sidebar.header("⚙️ Categories")
 st.sidebar.caption("Categories come from **Chart_of_Accounts.csv**. Keyword "
                    "rules live in **category_map.csv** (first match wins).")
